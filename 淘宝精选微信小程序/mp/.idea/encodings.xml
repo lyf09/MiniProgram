@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/infrastructure" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/infrastructure/infrastructure-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/infrastructure/infrastructure-tbk" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/infrastructure/infrastructure-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mp-parent" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mp-parent/mp-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mp-parent/mp-domain" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mp-parent/mp-portal" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mp-parent/mp-rest" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mp-parent/mp-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mp-parent/mp-test" charset="UTF-8" />
+  </component>
+</project>

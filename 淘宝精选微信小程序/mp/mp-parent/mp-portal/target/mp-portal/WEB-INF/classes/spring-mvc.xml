@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置注解驱动 -->
+    <context:annotation-config/>
+
+    <mvc:annotation-driven conversion-service="conversionServiceFactoryBean">
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 配置Conveter转换器  转换工厂 （日期、去掉前后空格）。。 -->
+    <bean id="conversionServiceFactoryBean" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <!-- 配置 多个转换器-->
+        <property name="converters">
+            <list>
+                <bean class="com.cloud.infrastructure.web.converter.DateConverter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--开启springioc 自动扫描注解包 -->
+    <context:component-scan base-package="com.cloud.mp.portal"/>
+
+    <!--静态资源过滤 -->
+    <mvc:resources location="/assets/" mapping="/assets/**/*"/>
+
+    <!--处理静态资源-->
+    <mvc:default-servlet-handler/>
+
+    <!--配置视图解析器 这里使用jsp -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 文件上传配置 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize">
+            <value>10485760</value>
+        </property>
+        <property name="maxInMemorySize">
+            <value>4096</value>
+        </property>
+        <property name="defaultEncoding">
+            <value>utf-8</value>
+        </property>
+    </bean>
+
+    <!-- 国际化 -->
+    <!-- 	<bean id="messageSource"
+            class="org.springframework.context.support.ResourceBundleMessageSource">
+            <property name="basenames">
+                <list>
+                    <value>message/message</value>
+                </list>
+            </property>
+            使用code作为默认显示
+            <property name="useCodeAsDefaultMessage" value="true" />
+        </bean> -->
+
+    <!-- 配置 LocaleChanceInterceptor 拦截器 作用： 获取name=locale的请求参数 -->
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"></bean>
+    </mvc:interceptors>
+
+    <!-- 配置 CookieLocaleResolver 作用：将Locale对象设置为cookie的属性；从cookie中获取Locale对象 -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="cookieMaxAge" value="604800"/>
+        <property name="defaultLocale" value="zh_CN"/>
+        <property name="cookieName" value="lang"></property>
+    </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有请求 -->
+            <mvc:mapping path="/**"/>
+            <!--放行user下的方法-->
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/assets/**"/>
+            <bean class="com.cloud.infrastructure.web.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

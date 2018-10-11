@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/logs/main",
+    "pages/counter/main",
+    "pages/account/main",
+    "pages/product/main",
+    "pages/category/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fb655e",
+    "navigationBarTitleText": "每日精选",
+    "navigationBarTextStyle": "light",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "backgroundColor": "#ffffff",
+    "color": "#999",
+    "selectedColor": "#fa5048",
+    "list": [{
+        "pagePath": "pages/index/main",
+        "text": "精选",
+        "iconPath": "/static/icon/tab/tab_coupon_normal.png",
+        "selectedIconPath": "/static/icon/tab/tab_coupon_selected.png"
+      },
+      {
+        "pagePath": "pages/account/main",
+        "text": "我的",
+        "iconPath": "/static/icon/tab/tab_mine_normal.png",
+        "selectedIconPath": "/static/icon/tab/tab_mine_selected.png"
+      }
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+
+    <properties resource="jdbc.properties"/>
+
+    <context id="mysqlTables" targetRuntime="MyBatis3">
+
+        <!--生成toString方法-->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <!--  关闭自动生成的注释  -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--配置数据库链接-->
+        <jdbcConnection
+                driverClass="${jdbc.driverClass}"
+                connectionURL="${jdbc.url}"
+                userId="${jdbc.username}"
+                password="${jdbc.password}"/>
+
+        <!--指定生成的类型为java类型，避免数据库中number等类型字段 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--自动生成的实体的存放包路径 -->
+        <javaModelGenerator targetPackage="com.cloud.mp.domain" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--自动生成的*Mapper.xml文件存放路径 -->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--自动生成的*Mapper.java存放路径 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.cloud.mp.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--配置需要生成的表-->
+        <table tableName="t_user" domainObjectName="User">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="userId" sqlStatement="mysql" identity="true" />
+        </table>
+        <table tableName="t_product" domainObjectName="Product">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="productId" sqlStatement="mysql" identity="true" />
+        </table>
+        <table tableName="t_category" domainObjectName="Category">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="categoryId" sqlStatement="mysql" identity="true" />
+        </table>
+
+
+        <!--        <table tableName="customer"
+                       domainObjectName="Customer"
+                       enableCountByExample="false"
+                       enableUpdateByExample="false"
+                       enableDeleteByExample="false"
+                       enableSelectByExample="false"
+                       selectByExampleQueryId="false">
+                    &lt;!&ndash;对字段进行驼峰转换&ndash;&gt;
+                    <property name="useActualColumnNames" value="false"/>
+                    <generatedKey column="cust_id" sqlStatement="select last_insert_id()" identity="true"/>
+                </table>
+                <table tableName="base_dict" domainObjectName="Dictionary">
+                    &lt;!&ndash;对字段进行驼峰转换&ndash;&gt;
+                    <property name="useActualColumnNames" value="false"/>
+                    <generatedKey column="dict_id" sqlStatement="select last_insert_id()" identity="true"/>
+                </table>-->
+    </context>
+</generatorConfiguration>

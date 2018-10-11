@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.mp.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.cloud.mp.domain.User">
+    <id column="userId" jdbcType="INTEGER" property="userId" />
+    <result column="loginAccount" jdbcType="VARCHAR" property="loginAccount" />
+    <result column="loginPassword" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="bindEmail" jdbcType="VARCHAR" property="bindEmail" />
+    <result column="bindMobile" jdbcType="VARCHAR" property="bindMobile" />
+    <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+    <result column="avatarUrl" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="thirdPartyOpenId" jdbcType="VARCHAR" property="thirdPartyOpenId" />
+    <result column="thirdPartyType" jdbcType="VARCHAR" property="thirdPartyType" />
+    <result column="userType" jdbcType="INTEGER" property="userType" />
+    <result column="userState" jdbcType="INTEGER" property="userState" />
+    <result column="registerTime" jdbcType="TIMESTAMP" property="registerTime" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    userId, loginAccount, loginPassword, bindEmail, bindMobile, nickName, avatarUrl, 
+    thirdPartyOpenId, thirdPartyType, userType, userState, registerTime, createTime, 
+    updateTime
+  </sql>
+  <select id="selectByExample" parameterType="com.cloud.mp.domain.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where userId = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where userId = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cloud.mp.domain.UserExample">
+    delete from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cloud.mp.domain.User">
+    <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_user (loginAccount, loginPassword, bindEmail, 
+      bindMobile, nickName, avatarUrl, 
+      thirdPartyOpenId, thirdPartyType, userType, 
+      userState, registerTime, createTime, 
+      updateTime)
+    values (#{loginAccount,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{bindEmail,jdbcType=VARCHAR}, 
+      #{bindMobile,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
+      #{thirdPartyOpenId,jdbcType=VARCHAR}, #{thirdPartyType,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
+      #{userState,jdbcType=INTEGER}, #{registerTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloud.mp.domain.User">
+    <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loginAccount != null">
+        loginAccount,
+      </if>
+      <if test="loginPassword != null">
+        loginPassword,
+      </if>
+      <if test="bindEmail != null">
+        bindEmail,
+      </if>
+      <if test="bindMobile != null">
+        bindMobile,
+      </if>
+      <if test="nickName != null">
+        nickName,
+      </if>
+      <if test="avatarUrl != null">
+        avatarUrl,
+      </if>
+      <if test="thirdPartyOpenId != null">
+        thirdPartyOpenId,
+      </if>
+      <if test="thirdPartyType != null">
+        thirdPartyType,
+      </if>
+      <if test="userType != null">
+        userType,
+      </if>
+      <if test="userState != null">
+        userState,
+      </if>
+      <if test="registerTime != null">
+        registerTime,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loginAccount != null">
+        #{loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="bindEmail != null">
+        #{bindEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bindMobile != null">
+        #{bindMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyOpenId != null">
+        #{thirdPartyOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyType != null">
+        #{thirdPartyType,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userState != null">
+        #{userState,jdbcType=INTEGER},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cloud.mp.domain.UserExample" resultType="java.lang.Long">
+    select count(*) from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_user
+    <set>
+      <if test="record.userId != null">
+        userId = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginAccount != null">
+        loginAccount = #{record.loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null">
+        loginPassword = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bindEmail != null">
+        bindEmail = #{record.bindEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bindMobile != null">
+        bindMobile = #{record.bindMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        nickName = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatarUrl != null">
+        avatarUrl = #{record.avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdPartyOpenId != null">
+        thirdPartyOpenId = #{record.thirdPartyOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdPartyType != null">
+        thirdPartyType = #{record.thirdPartyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null">
+        userType = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.userState != null">
+        userState = #{record.userState,jdbcType=INTEGER},
+      </if>
+      <if test="record.registerTime != null">
+        registerTime = #{record.registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_user
+    set userId = #{record.userId,jdbcType=INTEGER},
+      loginAccount = #{record.loginAccount,jdbcType=VARCHAR},
+      loginPassword = #{record.loginPassword,jdbcType=VARCHAR},
+      bindEmail = #{record.bindEmail,jdbcType=VARCHAR},
+      bindMobile = #{record.bindMobile,jdbcType=VARCHAR},
+      nickName = #{record.nickName,jdbcType=VARCHAR},
+      avatarUrl = #{record.avatarUrl,jdbcType=VARCHAR},
+      thirdPartyOpenId = #{record.thirdPartyOpenId,jdbcType=VARCHAR},
+      thirdPartyType = #{record.thirdPartyType,jdbcType=VARCHAR},
+      userType = #{record.userType,jdbcType=INTEGER},
+      userState = #{record.userState,jdbcType=INTEGER},
+      registerTime = #{record.registerTime,jdbcType=TIMESTAMP},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.mp.domain.User">
+    update t_user
+    <set>
+      <if test="loginAccount != null">
+        loginAccount = #{loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        loginPassword = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="bindEmail != null">
+        bindEmail = #{bindEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bindMobile != null">
+        bindMobile = #{bindMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nickName = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyOpenId != null">
+        thirdPartyOpenId = #{thirdPartyOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyType != null">
+        thirdPartyType = #{thirdPartyType,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        userType = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userState != null">
+        userState = #{userState,jdbcType=INTEGER},
+      </if>
+      <if test="registerTime != null">
+        registerTime = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where userId = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloud.mp.domain.User">
+    update t_user
+    set loginAccount = #{loginAccount,jdbcType=VARCHAR},
+      loginPassword = #{loginPassword,jdbcType=VARCHAR},
+      bindEmail = #{bindEmail,jdbcType=VARCHAR},
+      bindMobile = #{bindMobile,jdbcType=VARCHAR},
+      nickName = #{nickName,jdbcType=VARCHAR},
+      avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+      thirdPartyOpenId = #{thirdPartyOpenId,jdbcType=VARCHAR},
+      thirdPartyType = #{thirdPartyType,jdbcType=VARCHAR},
+      userType = #{userType,jdbcType=INTEGER},
+      userState = #{userState,jdbcType=INTEGER},
+      registerTime = #{registerTime,jdbcType=TIMESTAMP},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where userId = #{userId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.cloud.mp.domain.User">
+    <id column="userId" jdbcType="INTEGER" property="userId" />
+    <result column="loginAccount" jdbcType="VARCHAR" property="loginAccount" />
+    <result column="loginPassword" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="bindEmail" jdbcType="VARCHAR" property="bindEmail" />
+    <result column="bindMobile" jdbcType="VARCHAR" property="bindMobile" />
+    <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+    <result column="avatarUrl" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="userType" jdbcType="INTEGER" property="userType" />
+    <result column="userState" jdbcType="INTEGER" property="userState" />
+    <result column="registerTime" jdbcType="TIMESTAMP" property="registerTime" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, loginAccount, loginPassword, bindEmail, bindMobile, nickName, avatarUrl, 
+    userType, userState, registerTime, createTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where userId = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where userId = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cloud.mp.domain.User">
+    <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_user (loginAccount, loginPassword, bindEmail, 
+      bindMobile, nickName, avatarUrl, 
+      userType, userState, registerTime, 
+      createTime, updateTime)
+    values (#{loginAccount,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{bindEmail,jdbcType=VARCHAR}, 
+      #{bindMobile,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=INTEGER}, #{userState,jdbcType=INTEGER}, #{registerTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloud.mp.domain.User">
+    <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loginAccount != null">
+        loginAccount,
+      </if>
+      <if test="loginPassword != null">
+        loginPassword,
+      </if>
+      <if test="bindEmail != null">
+        bindEmail,
+      </if>
+      <if test="bindMobile != null">
+        bindMobile,
+      </if>
+      <if test="nickName != null">
+        nickName,
+      </if>
+      <if test="avatarUrl != null">
+        avatarUrl,
+      </if>
+      <if test="userType != null">
+        userType,
+      </if>
+      <if test="userState != null">
+        userState,
+      </if>
+      <if test="registerTime != null">
+        registerTime,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loginAccount != null">
+        #{loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="bindEmail != null">
+        #{bindEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bindMobile != null">
+        #{bindMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userState != null">
+        #{userState,jdbcType=INTEGER},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.mp.domain.User">
+    update t_user
+    <set>
+      <if test="loginAccount != null">
+        loginAccount = #{loginAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        loginPassword = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="bindEmail != null">
+        bindEmail = #{bindEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="bindMobile != null">
+        bindMobile = #{bindMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nickName = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null">
+        avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        userType = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userState != null">
+        userState = #{userState,jdbcType=INTEGER},
+      </if>
+      <if test="registerTime != null">
+        registerTime = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where userId = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloud.mp.domain.User">
+    update t_user
+    set loginAccount = #{loginAccount,jdbcType=VARCHAR},
+      loginPassword = #{loginPassword,jdbcType=VARCHAR},
+      bindEmail = #{bindEmail,jdbcType=VARCHAR},
+      bindMobile = #{bindMobile,jdbcType=VARCHAR},
+      nickName = #{nickName,jdbcType=VARCHAR},
+      avatarUrl = #{avatarUrl,jdbcType=VARCHAR},
+      userType = #{userType,jdbcType=INTEGER},
+      userState = #{userState,jdbcType=INTEGER},
+      registerTime = #{registerTime,jdbcType=TIMESTAMP},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where userId = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

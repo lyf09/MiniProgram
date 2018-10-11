@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.mp.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.cloud.mp.domain.Product">
+    <id column="productId" jdbcType="INTEGER" property="productId" />
+    <result column="itemId" jdbcType="VARCHAR" property="itemId" />
+    <result column="categoryId" jdbcType="VARCHAR" property="categoryId" />
+    <result column="categoryTitle" jdbcType="VARCHAR" property="categoryTitle" />
+    <result column="parentCategoryId" jdbcType="VARCHAR" property="parentCategoryId" />
+    <result column="parentCategoryTitle" jdbcType="VARCHAR" property="parentCategoryTitle" />
+    <result column="productTitle" jdbcType="VARCHAR" property="productTitle" />
+    <result column="smallImages" jdbcType="VARCHAR" property="smallImages" />
+    <result column="coverPic" jdbcType="VARCHAR" property="coverPic" />
+    <result column="marketPrice" jdbcType="REAL" property="marketPrice" />
+    <result column="finalPrice" jdbcType="REAL" property="finalPrice" />
+    <result column="shopTitle" jdbcType="VARCHAR" property="shopTitle" />
+    <result column="volume" jdbcType="INTEGER" property="volume" />
+    <result column="itemUrl" jdbcType="VARCHAR" property="itemUrl" />
+    <result column="dsr" jdbcType="INTEGER" property="dsr" />
+    <result column="provCity" jdbcType="VARCHAR" property="provCity" />
+    <result column="sellerId" jdbcType="VARCHAR" property="sellerId" />
+    <result column="userType" jdbcType="INTEGER" property="userType" />
+    <result column="couponStartFee" jdbcType="VARCHAR" property="couponStartFee" />
+    <result column="couponRemainCount" jdbcType="INTEGER" property="couponRemainCount" />
+    <result column="couponTotalCount" jdbcType="INTEGER" property="couponTotalCount" />
+    <result column="couponStartTime" jdbcType="TIMESTAMP" property="couponStartTime" />
+    <result column="couponEndTime" jdbcType="TIMESTAMP" property="couponEndTime" />
+    <result column="couponAmount" jdbcType="REAL" property="couponAmount" />
+    <result column="couponInfo" jdbcType="VARCHAR" property="couponInfo" />
+    <result column="couponShareUrl" jdbcType="VARCHAR" property="couponShareUrl" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="json" jdbcType="VARCHAR" property="json" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    productId, itemId, categoryId, categoryTitle, parentCategoryId, parentCategoryTitle, 
+    productTitle, smallImages, coverPic, marketPrice, finalPrice, shopTitle, volume, 
+    itemUrl, dsr, provCity, sellerId, userType, couponStartFee, couponRemainCount, couponTotalCount, 
+    couponStartTime, couponEndTime, couponAmount, couponInfo, couponShareUrl, description, 
+    json, createTime, updateTime
+  </sql>
+  <select id="selectByExample" parameterType="com.cloud.mp.domain.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_product
+    where productId = #{productId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_product
+    where productId = #{productId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cloud.mp.domain.ProductExample">
+    delete from t_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cloud.mp.domain.Product">
+    <selectKey keyProperty="productId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_product (itemId, categoryId, categoryTitle, 
+      parentCategoryId, parentCategoryTitle, 
+      productTitle, smallImages, coverPic, 
+      marketPrice, finalPrice, shopTitle, 
+      volume, itemUrl, dsr, 
+      provCity, sellerId, userType, 
+      couponStartFee, couponRemainCount, couponTotalCount, 
+      couponStartTime, couponEndTime, couponAmount, 
+      couponInfo, couponShareUrl, description, 
+      json, createTime, updateTime
+      )
+    values (#{itemId,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, #{categoryTitle,jdbcType=VARCHAR}, 
+      #{parentCategoryId,jdbcType=VARCHAR}, #{parentCategoryTitle,jdbcType=VARCHAR}, 
+      #{productTitle,jdbcType=VARCHAR}, #{smallImages,jdbcType=VARCHAR}, #{coverPic,jdbcType=VARCHAR}, 
+      #{marketPrice,jdbcType=REAL}, #{finalPrice,jdbcType=REAL}, #{shopTitle,jdbcType=VARCHAR}, 
+      #{volume,jdbcType=INTEGER}, #{itemUrl,jdbcType=VARCHAR}, #{dsr,jdbcType=INTEGER}, 
+      #{provCity,jdbcType=VARCHAR}, #{sellerId,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, 
+      #{couponStartFee,jdbcType=VARCHAR}, #{couponRemainCount,jdbcType=INTEGER}, #{couponTotalCount,jdbcType=INTEGER}, 
+      #{couponStartTime,jdbcType=TIMESTAMP}, #{couponEndTime,jdbcType=TIMESTAMP}, #{couponAmount,jdbcType=REAL}, 
+      #{couponInfo,jdbcType=VARCHAR}, #{couponShareUrl,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{json,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cloud.mp.domain.Product">
+    <selectKey keyProperty="productId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        itemId,
+      </if>
+      <if test="categoryId != null">
+        categoryId,
+      </if>
+      <if test="categoryTitle != null">
+        categoryTitle,
+      </if>
+      <if test="parentCategoryId != null">
+        parentCategoryId,
+      </if>
+      <if test="parentCategoryTitle != null">
+        parentCategoryTitle,
+      </if>
+      <if test="productTitle != null">
+        productTitle,
+      </if>
+      <if test="smallImages != null">
+        smallImages,
+      </if>
+      <if test="coverPic != null">
+        coverPic,
+      </if>
+      <if test="marketPrice != null">
+        marketPrice,
+      </if>
+      <if test="finalPrice != null">
+        finalPrice,
+      </if>
+      <if test="shopTitle != null">
+        shopTitle,
+      </if>
+      <if test="volume != null">
+        volume,
+      </if>
+      <if test="itemUrl != null">
+        itemUrl,
+      </if>
+      <if test="dsr != null">
+        dsr,
+      </if>
+      <if test="provCity != null">
+        provCity,
+      </if>
+      <if test="sellerId != null">
+        sellerId,
+      </if>
+      <if test="userType != null">
+        userType,
+      </if>
+      <if test="couponStartFee != null">
+        couponStartFee,
+      </if>
+      <if test="couponRemainCount != null">
+        couponRemainCount,
+      </if>
+      <if test="couponTotalCount != null">
+        couponTotalCount,
+      </if>
+      <if test="couponStartTime != null">
+        couponStartTime,
+      </if>
+      <if test="couponEndTime != null">
+        couponEndTime,
+      </if>
+      <if test="couponAmount != null">
+        couponAmount,
+      </if>
+      <if test="couponInfo != null">
+        couponInfo,
+      </if>
+      <if test="couponShareUrl != null">
+        couponShareUrl,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="json != null">
+        json,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryTitle != null">
+        #{categoryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCategoryId != null">
+        #{parentCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCategoryTitle != null">
+        #{parentCategoryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productTitle != null">
+        #{productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="smallImages != null">
+        #{smallImages,jdbcType=VARCHAR},
+      </if>
+      <if test="coverPic != null">
+        #{coverPic,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=REAL},
+      </if>
+      <if test="finalPrice != null">
+        #{finalPrice,jdbcType=REAL},
+      </if>
+      <if test="shopTitle != null">
+        #{shopTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="volume != null">
+        #{volume,jdbcType=INTEGER},
+      </if>
+      <if test="itemUrl != null">
+        #{itemUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="dsr != null">
+        #{dsr,jdbcType=INTEGER},
+      </if>
+      <if test="provCity != null">
+        #{provCity,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null">
+        #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="couponStartFee != null">
+        #{couponStartFee,jdbcType=VARCHAR},
+      </if>
+      <if test="couponRemainCount != null">
+        #{couponRemainCount,jdbcType=INTEGER},
+      </if>
+      <if test="couponTotalCount != null">
+        #{couponTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="couponStartTime != null">
+        #{couponStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponEndTime != null">
+        #{couponEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponAmount != null">
+        #{couponAmount,jdbcType=REAL},
+      </if>
+      <if test="couponInfo != null">
+        #{couponInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="couponShareUrl != null">
+        #{couponShareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="json != null">
+        #{json,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cloud.mp.domain.ProductExample" resultType="java.lang.Long">
+    select count(*) from t_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_product
+    <set>
+      <if test="record.productId != null">
+        productId = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemId != null">
+        itemId = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryId != null">
+        categoryId = #{record.categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryTitle != null">
+        categoryTitle = #{record.categoryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentCategoryId != null">
+        parentCategoryId = #{record.parentCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentCategoryTitle != null">
+        parentCategoryTitle = #{record.parentCategoryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productTitle != null">
+        productTitle = #{record.productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smallImages != null">
+        smallImages = #{record.smallImages,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverPic != null">
+        coverPic = #{record.coverPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marketPrice != null">
+        marketPrice = #{record.marketPrice,jdbcType=REAL},
+      </if>
+      <if test="record.finalPrice != null">
+        finalPrice = #{record.finalPrice,jdbcType=REAL},
+      </if>
+      <if test="record.shopTitle != null">
+        shopTitle = #{record.shopTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.volume != null">
+        volume = #{record.volume,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemUrl != null">
+        itemUrl = #{record.itemUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dsr != null">
+        dsr = #{record.dsr,jdbcType=INTEGER},
+      </if>
+      <if test="record.provCity != null">
+        provCity = #{record.provCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sellerId != null">
+        sellerId = #{record.sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null">
+        userType = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponStartFee != null">
+        couponStartFee = #{record.couponStartFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponRemainCount != null">
+        couponRemainCount = #{record.couponRemainCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponTotalCount != null">
+        couponTotalCount = #{record.couponTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponStartTime != null">
+        couponStartTime = #{record.couponStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponEndTime != null">
+        couponEndTime = #{record.couponEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponAmount != null">
+        couponAmount = #{record.couponAmount,jdbcType=REAL},
+      </if>
+      <if test="record.couponInfo != null">
+        couponInfo = #{record.couponInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponShareUrl != null">
+        couponShareUrl = #{record.couponShareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.json != null">
+        json = #{record.json,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_product
+    set productId = #{record.productId,jdbcType=INTEGER},
+      itemId = #{record.itemId,jdbcType=VARCHAR},
+      categoryId = #{record.categoryId,jdbcType=VARCHAR},
+      categoryTitle = #{record.categoryTitle,jdbcType=VARCHAR},
+      parentCategoryId = #{record.parentCategoryId,jdbcType=VARCHAR},
+      parentCategoryTitle = #{record.parentCategoryTitle,jdbcType=VARCHAR},
+      productTitle = #{record.productTitle,jdbcType=VARCHAR},
+      smallImages = #{record.smallImages,jdbcType=VARCHAR},
+      coverPic = #{record.coverPic,jdbcType=VARCHAR},
+      marketPrice = #{record.marketPrice,jdbcType=REAL},
+      finalPrice = #{record.finalPrice,jdbcType=REAL},
+      shopTitle = #{record.shopTitle,jdbcType=VARCHAR},
+      volume = #{record.volume,jdbcType=INTEGER},
+      itemUrl = #{record.itemUrl,jdbcType=VARCHAR},
+      dsr = #{record.dsr,jdbcType=INTEGER},
+      provCity = #{record.provCity,jdbcType=VARCHAR},
+      sellerId = #{record.sellerId,jdbcType=VARCHAR},
+      userType = #{record.userType,jdbcType=INTEGER},
+      couponStartFee = #{record.couponStartFee,jdbcType=VARCHAR},
+      couponRemainCount = #{record.couponRemainCount,jdbcType=INTEGER},
+      couponTotalCount = #{record.couponTotalCount,jdbcType=INTEGER},
+      couponStartTime = #{record.couponStartTime,jdbcType=TIMESTAMP},
+      couponEndTime = #{record.couponEndTime,jdbcType=TIMESTAMP},
+      couponAmount = #{record.couponAmount,jdbcType=REAL},
+      couponInfo = #{record.couponInfo,jdbcType=VARCHAR},
+      couponShareUrl = #{record.couponShareUrl,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      json = #{record.json,jdbcType=VARCHAR},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cloud.mp.domain.Product">
+    update t_product
+    <set>
+      <if test="itemId != null">
+        itemId = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null">
+        categoryId = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryTitle != null">
+        categoryTitle = #{categoryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCategoryId != null">
+        parentCategoryId = #{parentCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCategoryTitle != null">
+        parentCategoryTitle = #{parentCategoryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="productTitle != null">
+        productTitle = #{productTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="smallImages != null">
+        smallImages = #{smallImages,jdbcType=VARCHAR},
+      </if>
+      <if test="coverPic != null">
+        coverPic = #{coverPic,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null">
+        marketPrice = #{marketPrice,jdbcType=REAL},
+      </if>
+      <if test="finalPrice != null">
+        finalPrice = #{finalPrice,jdbcType=REAL},
+      </if>
+      <if test="shopTitle != null">
+        shopTitle = #{shopTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="volume != null">
+        volume = #{volume,jdbcType=INTEGER},
+      </if>
+      <if test="itemUrl != null">
+        itemUrl = #{itemUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="dsr != null">
+        dsr = #{dsr,jdbcType=INTEGER},
+      </if>
+      <if test="provCity != null">
+        provCity = #{provCity,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null">
+        sellerId = #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        userType = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="couponStartFee != null">
+        couponStartFee = #{couponStartFee,jdbcType=VARCHAR},
+      </if>
+      <if test="couponRemainCount != null">
+        couponRemainCount = #{couponRemainCount,jdbcType=INTEGER},
+      </if>
+      <if test="couponTotalCount != null">
+        couponTotalCount = #{couponTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="couponStartTime != null">
+        couponStartTime = #{couponStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponEndTime != null">
+        couponEndTime = #{couponEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponAmount != null">
+        couponAmount = #{couponAmount,jdbcType=REAL},
+      </if>
+      <if test="couponInfo != null">
+        couponInfo = #{couponInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="couponShareUrl != null">
+        couponShareUrl = #{couponShareUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="json != null">
+        json = #{json,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where productId = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cloud.mp.domain.Product">
+    update t_product
+    set itemId = #{itemId,jdbcType=VARCHAR},
+      categoryId = #{categoryId,jdbcType=VARCHAR},
+      categoryTitle = #{categoryTitle,jdbcType=VARCHAR},
+      parentCategoryId = #{parentCategoryId,jdbcType=VARCHAR},
+      parentCategoryTitle = #{parentCategoryTitle,jdbcType=VARCHAR},
+      productTitle = #{productTitle,jdbcType=VARCHAR},
+      smallImages = #{smallImages,jdbcType=VARCHAR},
+      coverPic = #{coverPic,jdbcType=VARCHAR},
+      marketPrice = #{marketPrice,jdbcType=REAL},
+      finalPrice = #{finalPrice,jdbcType=REAL},
+      shopTitle = #{shopTitle,jdbcType=VARCHAR},
+      volume = #{volume,jdbcType=INTEGER},
+      itemUrl = #{itemUrl,jdbcType=VARCHAR},
+      dsr = #{dsr,jdbcType=INTEGER},
+      provCity = #{provCity,jdbcType=VARCHAR},
+      sellerId = #{sellerId,jdbcType=VARCHAR},
+      userType = #{userType,jdbcType=INTEGER},
+      couponStartFee = #{couponStartFee,jdbcType=VARCHAR},
+      couponRemainCount = #{couponRemainCount,jdbcType=INTEGER},
+      couponTotalCount = #{couponTotalCount,jdbcType=INTEGER},
+      couponStartTime = #{couponStartTime,jdbcType=TIMESTAMP},
+      couponEndTime = #{couponEndTime,jdbcType=TIMESTAMP},
+      couponAmount = #{couponAmount,jdbcType=REAL},
+      couponInfo = #{couponInfo,jdbcType=VARCHAR},
+      couponShareUrl = #{couponShareUrl,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      json = #{json,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where productId = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>

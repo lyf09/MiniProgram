@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/infrastructure/infrastructure.iml" filepath="$PROJECT_DIR$/infrastructure/infrastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/infrastructure/infrastructure-common/infrastructure-common.iml" filepath="$PROJECT_DIR$/infrastructure/infrastructure-common/infrastructure-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/infrastructure/infrastructure-tbk/infrastructure-tbk.iml" filepath="$PROJECT_DIR$/infrastructure/infrastructure-tbk/infrastructure-tbk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/infrastructure/infrastructure-web/infrastructure-web.iml" filepath="$PROJECT_DIR$/infrastructure/infrastructure-web/infrastructure-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mp-parent/mp-dao/mp-dao.iml" filepath="$PROJECT_DIR$/mp-parent/mp-dao/mp-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mp-parent/mp-domain/mp-domain.iml" filepath="$PROJECT_DIR$/mp-parent/mp-domain/mp-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mp-parent/mp-parent.iml" filepath="$PROJECT_DIR$/mp-parent/mp-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mp-parent/mp-portal/mp-portal.iml" filepath="$PROJECT_DIR$/mp-parent/mp-portal/mp-portal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mp-parent/mp-rest/mp-rest.iml" filepath="$PROJECT_DIR$/mp-parent/mp-rest/mp-rest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mp-parent/mp-service/mp-service.iml" filepath="$PROJECT_DIR$/mp-parent/mp-service/mp-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mp-parent/mp-test/mp-test.iml" filepath="$PROJECT_DIR$/mp-parent/mp-test/mp-test.iml" />
+    </modules>
+  </component>
+</project>
